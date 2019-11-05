@@ -1,5 +1,5 @@
 # Peaks and Valleys #
-## summary##
+## summary ##
 Summary: This is a representation of an algorithm that was once presented 
 as a coding challenge.
 
