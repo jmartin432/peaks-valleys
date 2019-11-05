@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peaks and Valleys</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="icon" href="./images/club_logo_20.png">
+    <style>
+        body {
+            font-family: Inconsolata;
+        }
+
+        p {
+            margin: 0px;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Peaks and Valleys</h1>
+        <div id="summary">
+            <p>Summary: This is a representation of an algorithm that was once presented as a coding challenge.</p>
+            <ol>
+                <li>A sequence of numbers is generated according to a few simple rules generating the peaks.</li>
+                <li>The sequence is converted to a line drawn on the HTML canvas.</li>
+                <li>I wrote an algorithm that then searches the landscape for valleys and fills those with water.</li>
+            </ol>
+        <button type="button" id="refreshButton" onclick="refresh();">Refresh</button>
+    </div>
+    <canvas id="peaks" width="784" height="420"></canvas>
+    <div id="data">
+    </div>
+</body>
+
+<script>
+    let height = 20;
+    let length = 50;
+    let canvas = document.getElementById("peaks");
+    let ctx = canvas.getContext('2d');
+
+    function buildData(height, length) {
+        let options = [1, -1];
+        let data = [Math.floor(Math.random() * height) + 1];
+        for (let i = 0; i < (length - 1); i++) {
+            let last = data.slice(-1)[0];
+            if (last === height) {
+                data.push(height - 1);
+            }
+            else if (last === 1) {
+                data.push(2);
+            }
+            else {
+                let choice = Math.floor(Math.random() * 2);
+                let next = last + options[choice];
+                data.push(next);
+            }
+        }
+        return data;
+    }
+
+    function findWater(data) {
+        let start = 0;
+        let end = 0;
+        for (let i = 0; i < (length - 2); i++) {
+            if (data[i] > data[i + 1]) {
+                start = i;
+                for (let j = i + 2; j < (length); j++) {
+                    if (data[start] === data[j]) {
+                        end = j;
+                        i = j - 1;
+                        break;
+                    }
+
+                }
+            }
+            if (end === 0) {
+                continue;
+            }
+            ctx.beginPath();
+            ctx.moveTo((start * 16), (420 - (data[start] * 20)));
+            for (let j = (start + 1); j < (end + 1); j++) {
+                ctx.lineTo((j * 16), (420 - (data[j] * 20)));
+                ctx.strokeStyle = "blue";
+                ctx.stroke();
+            }
+            ctx.lineTo((start * 16), (420 - (data[start] * 20)));
+            ctx.fillStyle = "blue";
+            ctx.fill();
+        }
+    }
+
+    function buildLine(n, data) {
+        let ln = "";
+        for (let j = 0; j < data.length; j++) {
+            if (data[j] <= (height - n - 1)) {
+                ln += "&nbsp&nbsp";
+            }
+            else {
+                ln += "X&nbsp";
+            }
+        }
+        return ln;
+    }
+
+    function refresh() {
+        document.getElementById("data").innerHTML = "";
+        let data = buildData(height, length);
+        ctx.fillStyle = "pink";
+        ctx.fillRect(0, 0, 800, 420);
+        ctx.beginPath();
+        ctx.moveTo(0, (420 - (data[0] * 20)));
+        for (let i = 1; i < length; i++) {
+            ctx.lineTo((i * 16), (420 - (data[i] * 20)));
+            ctx.strokeStyle = "green";
+            ctx.stroke();
+        }
+        ctx.lineTo(784, 420);
+        ctx.lineTo(0, 420);
+        ctx.lineTo(0, (420 - (data[0] * 20)));
+        ctx.fillStyle = "green";
+        ctx.fill();
+
+        findWater(data);
+
+        for (let i = 0; i < height; i++) {
+            let line = document.createElement("p");
+            line.innerHTML = buildLine(i, data);
+            document.querySelector("#data").appendChild(line);
+        }
+
+        let line = document.createElement("p");
+        line.innerHTML = data;
+        document.querySelector("#data").appendChild(line);
+    }
+
+    refresh()
+</script>
+
+</body>
+</html>
+
