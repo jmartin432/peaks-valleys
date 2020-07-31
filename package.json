@@ -1,0 +1,19 @@
+{
+  "name": "peaks-valleys",
+  "version": "1.0.0",
+  "description": "Peaks and Valleys Algorithm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmartin432/peaks-valleys.git"
+  },
+  "author": "Justin L. Martin (info@justinlmartin.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmartin432/peaks-valleys/issues"
+  },
+  "homepage": "https://github.com/jmartin432/peaks-valleys#readme"
+}
