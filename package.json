@@ -4,7 +4,9 @@
   "description": "Peaks and Valleys Algorithm",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-deploy": "aws lambda invoke --function-name static-sites-pipeline-deploy-lambda --invocation-type Event --cli-binary-format raw-in-base64-out --payload '{ \"app-name\": \"portfolio\", \"environment\": \"dev\" }'",
+    "upload-files": "sh scripts/upload-files.sh"
   },
   "repository": {
     "type": "git",
