@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-deploy": "aws lambda invoke --function-name static-sites-pipeline-deploy-lambda --invocation-type Event --cli-binary-format raw-in-base64-out --payload '{ \"app-name\": \"peaks-valleys\", \"environment\": \"dev\" }'",
-    "prod-deploy": "aws lambda invoke --function-name static-sites-pipeline-deploy-lambda --invocation-type Event --cli-binary-format raw-in-base64-out --payload '{ \"app-name\": \"peaks-valleys\", \"environment\": \"dev\" }'",
-    "upload-files": "sh scripts/upload-files.sh"
+    "prod-deploy": "aws lambda invoke --function-name static-sites-pipeline-deploy-lambda --invocation-type Event --cli-binary-format raw-in-base64-out --payload '{ \"app-name\": \"peaks-valleys\", \"environment\": \"prod\" }'",
   },
   "repository": {
     "type": "git",
